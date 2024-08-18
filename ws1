@@ -137,7 +137,39 @@ while(flag == 0 and j<8):
             y = y+1
             t = t+1
         b[i]=sum
-    for i in range(n):
+    for i in range(n):import numpy as np
+import sympy as sp
+
+
+x = sp.Symbol('x')
+
+n = int(input("Size of Matrix : "))
+# tol = 0.001
+print("Enter Elements : ")
+arr=[]
+for i in range(n):
+    t = []
+    for j in range(n):
+        temp = int(input())
+        t.append(temp)
+    arr.append(t)
+
+arr = sp.Matrix(arr)
+sp.pprint(arr)
+matrix = sp.Matrix(arr) - x * sp.eye(n)
+
+det = matrix.det()
+
+
+eq = sp.Eq(det, 0)
+eigen_values = sp.solve(eq, x)
+print(eigen_values)
+
+eigenvects = arr.eigenvects()
+# print(eigenvects)
+for i in eigenvects:
+    sp.pprint(i[n-1])
+
         sol[i] = (b[i]/b[i+1])**(1/(2**j))
     print(b)
     print(sol)
@@ -156,3 +188,6 @@ num = np.linspace(-1, 5, 400)
 y = f(num)
 plt.plot(num, y)
 plt.show()
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
