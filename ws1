@@ -1,0 +1,105 @@
+# BISECTION METHOD
+from sympy import symbols, lambdify, diff, cos, sin, exp
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+x = symbols('x')
+expr = eval(input("Enter expression: "))
+a = float(input("Enter left interval: "))
+b = float(input("Enter right interval: "))
+f = lambdify(x, expr)
+
+x_vals = np.linspace(a, b, 400)
+y_vals = f(x_vals)
+
+plt.plot(x_vals, y_vals, label=r"$f(x) = \cos(x) - x e^x$")
+plt.axhline(0, color='black', linewidth=1.5)
+plt.axvline(0, color='black', linewidth=1.5)
+plt.title("Graph of $f(x) = \cos(x) - x e^x$")
+plt.legend()
+plt.grid(True)
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.show()
+
+epsilon = 0.001
+while(abs(a-b) > epsilon):
+    mid = (a+b)/2
+    fa = expr.subs(x,a)
+    fb = expr.subs(x,b)
+    fc = expr.subs(x,mid)
+    if fa*fc < 0:
+     	b = mid
+    else:
+        a = mid
+print(f'root={mid}')
+
+
+#REGULA FALSI METHOD
+
+# import sympy as sp
+# import math
+# x = sp.symbols('x')
+# expr = eval(input("Enter expression: "))
+# a = float(input("Enter left interval: "))
+# b = float(input("Enter right interval: "))
+# sp.plot(expr,(x,a,b))
+# epsilon = 0.001
+# max_it = 1000
+# for i in range(max_it):
+#     fa = expr.subs(x,a)
+#     fb = expr.subs(x,b)
+#     mid = (a*fb - b*fa)/(fb - fa)
+#     fc = expr.subs(x,mid)
+#     if abs(a-b) < epsilon:
+#         break
+#     if fa*fc < 0:
+#      	b = mid
+#     else:
+#      	a = mid
+# print(f'root={mid}')
+
+
+# #NEWTON RAPHSON METHOD
+
+# import sympy as sp
+# x = sp.symbols('x')
+# expr = eval(input("Enter expression: "))
+# x1 = float(input("Enter left interval: "))
+# x2 = float(input("Enter right interval: "))
+# sp.plot(expr,(x,x1,x2))
+# dif = sp.diff(expr,x)
+# epsilon = 0.001
+# max_it = 100
+# fx1 = expr.subs(x,x1)
+# fx2 = expr.subs(x,x2)
+# x0 = (x1+x2)/2
+
+# for i in range(max_it):
+#     ft = expr.subs(x,x0)
+#     temp = x0 - ft/dif.subs(x,x0)
+#     if abs(x0 - temp) < epsilon:
+#         break
+#     x0 = temp
+# print(f'root={temp}')
+  
+
+# #FIXED POINT ITERATION METHOD
+
+# import sympy as sp
+# x = sp.symbols('x')
+# f = eval(input("Enter f(x): "))
+# g = eval(input("Enter g(x): "))
+# x1 = float(input("Enter left interval: "))
+# x2 = float(input("Enter right interval: "))
+# sp.plot(f,(x,x1,x2))
+# sp.plot(g,(x,x1,x2))
+# epsilon = 0.001
+# max_it = 1000
+# x0 = (x1 + x2)/2
+# for i in range(max_it):
+#     temp = g.subs(x,x0)
+#     if abs(temp - x0) < epsilon:
+#         break
+#     x0 = temp
+# print(f'root={temp}')
