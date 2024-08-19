@@ -191,3 +191,102 @@ plt.show()
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
+Power Method
+import numpy as np
+
+def power_method(A, num_iterations=100, tolerance=1e-6):
+    n = A.shape[0]
+    b = np.random.rand(n)  # start with a random vector
+    
+    # Normalize the initial vector
+    b = b / np.sqrt(np.sum(b ** 2))
+
+    for _ in range(num_iterations):
+        # Perform the matrix-vector multiplication
+        b_new = np.dot(A, b)
+        
+        # Estimate the eigenvalue using the Rayleigh quotient
+        eigenvalue = np.dot(b_new, b) / np.dot(b, b)
+        
+        # Normalize the new vector
+        b_new = b_new / np.sqrt(np.sum(b_new ** 2))
+        
+        # Check for convergence
+        if np.sqrt(np.sum((b - b_new) ** 2)) < tolerance:
+            break
+        
+        b = b_new
+    
+    return eigenvalue, b
+
+def main():
+    n = int(input("Enter the order of the matrix: "))
+    A = np.zeros((n, n))
+
+    print("Enter the matrix elements:")
+    for i in range(n):
+        for j in range(n):
+            A[i, j] = float(input(f"Enter element [{i}][{j}]: "))
+
+    eigenvalue, eigenvector = power_method(A)
+    print("\nLargest eigenvalue:", eigenvalue)
+    print("Corresponding eigenvector:", eigenvector)
+
+if __name__ == "__main__":
+    main()
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+Gauss Jordan
+
+# Importing NumPy Library
+import numpy as np
+
+# Reading number of unknowns
+n = int(input('Enter number of unknowns: '))
+
+# Making numpy array of n x n+1 size and initializing 
+# to zero for storing augmented matrix
+a = np.zeros((n, n+1))
+
+# Making numpy array of n size and initializing 
+# to zero for storing solution vector
+x = np.zeros(n)
+
+# Reading augmented matrix coefficients
+print('Enter Augmented Matrix Coefficients:')
+for i in range(n):
+    for j in range(n+1):
+        a[i][j] = float(input('a[' + str(i) + '][' + str(j) + ']='))
+
+# Applying Gauss-Jordan Elimination
+for i in range(n):
+    for j in range(n):
+
+        if(i!=j):
+            ratio = a[j][i] / a[i][i]
+
+            for k in range(n+1):
+                a[j][k] = a[j][k] - ratio * a[i][k]
+
+            # Print the matrix after each row operation
+            print(f"\nMatrix after making row {j+1} zero below pivot at row {i+1}:")
+            print(a)
+
+
+# Obtaining Solution
+for i in range(n):
+    x[i] = a[i][n] / a[i][i]
+print("RREF ")
+for i in range(n):
+    temp = a[i][i]
+    for j in range(n+1):
+        a[i][j] = a[i][j] / temp
+print(a)
+# Displaying solution
+print('\nRequired solution is: ')
+for i in range(n):
+    print('X%d = %0.2f' % (i, x[i]), end='\t')
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
